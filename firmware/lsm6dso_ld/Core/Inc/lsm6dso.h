@@ -1,6 +1,23 @@
 #ifndef LSM6DSO_H_
 #define LSM6DSO_H_
 
+#define "main.h"
+
+/* The communication protocol you will be using */
+#define LSM6DSO_USING_I2C                     0x01U
+//#define LSM6DSO_USING_SPI                   0x01U
+
+#ifdef LSM6DSO_USING_I2C
+  #define LSM6DSO_I2C_PORT hi2c1
+  extern I2C_HandleTypeDef LSM6DSO_I2C_PORT
+#else
+  #define LSM6DSO_SPI_PORT hspi1;
+  extern SPI_HandleTypeDef LSM6DSO_SPI_PORT
+#endif
+
+  
+  
+
 
 /* Enables access to the embedded functions configuration registers */
 #define LSM6DSO_REG_FUNC_CFG_ACCESS           0x01U
