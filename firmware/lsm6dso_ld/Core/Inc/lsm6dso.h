@@ -3,21 +3,7 @@
 
 #define "main.h"
 
-/* The communication protocol you will be using */
-#define LSM6DSO_USING_I2C                     0x01U
-//#define LSM6DSO_USING_SPI                   0x01U
-
-#ifdef LSM6DSO_USING_I2C
-  #define LSM6DSO_I2C_PORT hi2c1
-  extern I2C_HandleTypeDef LSM6DSO_I2C_PORT
-#else
-  #define LSM6DSO_SPI_PORT hspi1;
-  extern SPI_HandleTypeDef LSM6DSO_SPI_PORT
-#endif
-
-  
-  
-
+#define LSM6DSO_DEV_ADDRESS(dev_num)          (((0x6AU) | dev_num) << 1)
 
 /* Enables access to the embedded functions configuration registers */
 #define LSM6DSO_REG_FUNC_CFG_ACCESS           0x01U
@@ -112,7 +98,7 @@
 #define LSM6DSO_ODR_XL_1_6_LPERF              (0x0BU << 4)
 #define LSM6DSO_ODR_XL_12_5_HPERF             (0x0BU << 4)
 
-/* These modes are the same when XL_HM_MODE = 1 | 0 */
+/* These modes are the same when XL_HM_MODE = 1 | 0 but dpends on CTRL6_C*/
 #define LSM6DSO_ODR_XL_12_5Hz                 (0x01U << 4)
 #define LSM6DSO_ODR_XL_26Hz                   (0x02U << 4)
 #define LSM6DSO_ODR_XL_52Hz                   (0x03U << 4)
@@ -124,10 +110,20 @@
 #define LSM6DSO_ODR_XL_3_33kHz                (0x09U << 4)
 #define LSM6DSO_ODR_XL_6_66kHz                (0x0AU << 4)
 
-// not finished here
+// not finished here depends on CTRL8_XL
 #define LSM6DSO_FS_XL_2G                      0x00U
-#define LSM6DSO_FS_XL_16G                     (0x01 << 2)
-#define LSM6DSO_XL_FS_4G                      (0x02 << 2)
-#define LSM%DSO_XL_FS_8G                      (0x03 << 2)
+#define LSM6DSO_FS_XL_16G                     (0x01U << 2)
+#define LSM6DSO_FS_XL_4G                      (0x02U << 2)
+#define LSM6DSO_fL_FS_8G                      (0x03U << 2)
+
+#define LSM6DSO_LPF_XL_EN_MASK                (0x01U << 1)
+
+
+typedef struct{
+  I2C_HandleTypeDef *hi2c;
+  SPI_HandleTypeDef *hspi;
+  uint8_t dev_addr;
+}lsm6dso_t;
+
 
 #endif /* LSM6DSO_H_ */
