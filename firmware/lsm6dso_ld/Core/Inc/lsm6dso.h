@@ -177,6 +177,9 @@ typedef struct {
     I2C_HandleTypeDef *hi2c;
     SPI_HandleTypeDef *hspi;
     uint8_t dev_addr;
+    uint32_t data_x;
+    uint32_t data_y;
+    uint32_t data_z;
 } lsm6dso_t;
 
 #endif /* LSM6DSO_H_ */
