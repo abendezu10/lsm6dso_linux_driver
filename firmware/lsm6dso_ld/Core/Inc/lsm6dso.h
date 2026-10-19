@@ -2,7 +2,8 @@
 #define LSM6DSO_H_
 
 #include <stdint.h>
-#include "main.h"
+
+#include "stm32f4xx_hal.h"
 
 /* STM32 HAL uses the 7-bit I2C address shifted left by one bit.
  * The caller must validate that dev_num is 0 or 1.
@@ -170,7 +171,7 @@
 #define LSM6DSO_OUTZ_LOW_BYTE(raw)                        ((uint8_t)((uint16_t)(raw) & 0xFFU))
 #define LSM6DSO_OUTZ_HIGH_BYTE(raw)                       ((uint8_t)(((uint16_t)(raw) >> 8) & 0xFFU))
 
-#define 
+#define LSM6DSO_NUM_OF_SAMPLES                            5U
 
 
 typedef struct {
@@ -181,5 +182,9 @@ typedef struct {
     uint32_t data_y;
     uint32_t data_z;
 } lsm6dso_t;
+
+HAL_StatusTypeDef lsm6dso_init(lsm6dso_t *lsm6dso, I2C_HandleTypeDef *hi2c, uint8_t dev_num);
+
+HAL_StatusTypeDef lsm6dso_read_xl(lsm6dso_t *lsm6dso, I2C_HandleTypeDef *hi2c);
 
 #endif /* LSM6DSO_H_ */
